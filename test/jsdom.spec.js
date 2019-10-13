@@ -104,5 +104,5 @@ describe('Table', () => {
 		expect(win).toMatchObject({gameOver: true, winner: 'black'})
 	})
 
-	it.todo('should win with any preset')
+	// it.todo('should win with any preset')
 })

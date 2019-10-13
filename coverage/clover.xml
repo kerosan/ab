@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1570961521850" clover="3.2.0">
-  <project timestamp="1570961521850" name="All files">
+<coverage generated="1570962007503" clover="3.2.0">
+  <project timestamp="1570962007503" name="All files">
     <metrics statements="58" coveredstatements="58" conditionals="20" coveredconditionals="20" methods="12" coveredmethods="11" elements="90" coveredelements="89" complexity="0" loc="58" ncloc="58" packages="1" files="1" classes="1"/>
     <file name="field.js" path="/Users/nikolajartemov/work/ab/src/public/js/field.js">
       <metrics statements="58" coveredstatements="58" conditionals="20" coveredconditionals="20" methods="12" coveredmethods="11"/>
@@ -31,10 +31,10 @@
       <line num="63" count="25" type="stmt"/>
       <line num="64" count="25" type="stmt"/>
       <line num="65" count="25" type="stmt"/>
-      <line num="74" count="12" type="stmt"/>
-      <line num="75" count="12" type="stmt"/>
-      <line num="76" count="12" type="cond" truecount="2" falsecount="0"/>
-      <line num="77" count="12" type="stmt"/>
+      <line num="74" count="10" type="stmt"/>
+      <line num="75" count="10" type="stmt"/>
+      <line num="76" count="10" type="cond" truecount="2" falsecount="0"/>
+      <line num="77" count="10" type="stmt"/>
       <line num="86" count="2" type="stmt"/>
       <line num="87" count="2" type="stmt"/>
       <line num="88" count="2" type="stmt"/>
