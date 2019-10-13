@@ -16,8 +16,9 @@ table tr td {
 }
 
 table tr td.black {
-  background-color: #111111;
+    background-color: #111111;
 }
+
 table tr td.white {
-  background-color: #eeeeee;
+    background-color: #eeeeee;
 }

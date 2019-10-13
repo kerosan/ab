@@ -17,20 +17,19 @@
 
 <script type="text/javascript" src="/js/field.js"></script>
 <script>
-	const root = document.getElementById('root')
-	const button = document.querySelector('button#reset')
-	const size = document.querySelector('input[type=number]').value
-	button.addEventListener('click', () => {
-		const size = document.querySelector('input[type=number]').value
-		const oldTable = document.querySelector('table')
-		const table = initGame(size)
-		root.replaceChild(table, oldTable)
-
-	})
-	window.addEventListener('load', () => {
-		const table = initGame(size)
-		root.appendChild(table)
-	})
+  const root = document.getElementById('root')
+  const button = document.querySelector('button#reset')
+  const size = document.querySelector('input[type=number]').value
+  button.addEventListener('click', () => {
+    const size = document.querySelector('input[type=number]').value
+    const oldTable = document.querySelector('table')
+    const table = initGame(size)
+    root.replaceChild(table, oldTable)
+  })
+  window.addEventListener('load', () => {
+    const table = initGame(size)
+    root.appendChild(table)
+  })
 </script>
 </body>
 </html>
