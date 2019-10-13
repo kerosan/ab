@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AB</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<button id="reset" data-hook="start">Start</button>
+<input type="number" value="5" step="1" min="0" max="10"/>
+<hr>
+<div id="root"></div>
+
+<script type="text/javascript" src="/js/field.js"></script>
+<script>
+  const root = document.getElementById('root')
+  const button = document.querySelector('button#reset')
+  const size = document.querySelector('input[type=number]').value
+  button.addEventListener('click', () => {
+    const size = document.querySelector('input[type=number]').value
+    const oldTable = document.querySelector('table')
+    const table = initGame(size)
+    root.replaceChild(table, oldTable)
+  })
+  window.addEventListener('load', () => {
+    const table = initGame(size)
+    root.appendChild(table)
+  })
+</script>
+</body>
+</html>

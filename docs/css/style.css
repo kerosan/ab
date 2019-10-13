@@ -1,0 +1,24 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+table tr td {
+    cursor: pointer;
+    border: 1px solid grey;
+    width: 100px;
+    height: 100px;
+}
+
+table tr td.black {
+    background-color: #111111;
+}
+
+table tr td.white {
+    background-color: #eeeeee;
+}
