@@ -87,6 +87,7 @@ function onClickHandler(e, table) {
   const updatedCell = toggleCell(cell)
   updateSiblingCell(table, updatedCell)
   const res = checkWin(table)
+  // istanbul ignore next
   res && res.gameOver && alert(`Winner: ${res.winner}`) && initGame(table.rows.length)
 }
 
@@ -154,7 +155,7 @@ function updateSiblingCell(table = document.querySelector('table'), cell) {
   toggleByCell(table, bottom)
 }
 
-
+/* istanbul ignore next */
 if (typeof exports !== 'undefined') {
   module.exports = {
     initGame,
