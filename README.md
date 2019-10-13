@@ -4,7 +4,7 @@ run tests
 
  `npm i`
  
- `npm ci`
+ `npm run test:ci`
 
 start server on http://localhost:3003
  
