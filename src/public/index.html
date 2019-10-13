@@ -22,15 +22,14 @@
 	const size = document.querySelector('input[type=number]').value
 	button.addEventListener('click', () => {
 		const size = document.querySelector('input[type=number]').value
-		const table = document.querySelector('table')
-		root.replaceChild(renderField(size), table)
-	})
-	console.log('on load')
-	window.addEventListener('load', () => {
-		const table = renderField(size)
-		root.appendChild(table)
-      table.
+		const oldTable = document.querySelector('table')
+		const table = initGame(size)
+		root.replaceChild(table, oldTable)
 
+	})
+	window.addEventListener('load', () => {
+		const table = initGame(size)
+		root.appendChild(table)
 	})
 </script>
 </body>

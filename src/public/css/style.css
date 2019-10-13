@@ -3,16 +3,13 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-    color: #00B7FF;
-}
-
 #root {
     display: flex;
     justify-content: center;
 }
 
 table tr td {
+    cursor: pointer;
     border: 1px solid grey;
     width: 100px;
     height: 100px;

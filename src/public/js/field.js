@@ -1,9 +1,16 @@
+function initGame(size) {
+	const table = renderTable(size)
+	setHandlers(table)
+	setColors(table)
+	return table
+}
+
 /**
  *
  * @param n Number
  * @returns {HTMLTableElement}
  */
-function renderField(n) {
+function renderTable(n) {
 	const table = document.createElement('table')
 	table.setAttribute('data-hook', 'field')
 	const body = table.createTBody()
@@ -12,7 +19,7 @@ function renderField(n) {
 		row.setAttribute('role', 'grid')
 		row.setAttribute('data-hook', `row-${i}`)
 		for (let j = 0; j < n; j++) {
-			const cell = row.insertCell()//document.createElement('td')
+			const cell = row.insertCell()
 			cell.setAttribute('role', 'gridcell')
 			cell.setAttribute('data-hook', `cell-${i}-${j}`)
 		}
@@ -22,8 +29,34 @@ function renderField(n) {
 
 /**
  *
+ * @param table HTMLTableElement
+ */
+function setHandlers(table) {
+	const n = table.rows.length
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			table.rows.item(i).cells[j].addEventListener('click', (e) => onClickHandler(e, table))
+		}
+	}
+}
+
+/**
+ *
+ * @param table HTMLTableElement
+ */
+function setColors(table) {
+	const n = table.rows.length
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			updateCell(table.rows.item(i).cells[j], Math.random() > .5 ? 'black' : 'white')
+		}
+	}
+}
+
+/**
+ *
  * @param cell HTMLTableCellElement
- * @param color 'black' || 'white'
+ * @param color 'black' | 'white'
  * @returns HTMLTableCellElement
  */
 function updateCell(cell, color) {
@@ -46,40 +79,95 @@ function toggleCell(cell) {
 
 /**
  *
- * @param e Event
+ * @param e MouseEvent
+ * @param table HTMLTableElement
  */
-function onClickHandler(e) {
+function onClickHandler(e, table) {
 	const cell = e.target
-	console.log(cell)
-	const updatedCell = updateCell(e.target, Math.random() > .5 ? 'black' : 'white')
-	updateSiblingCell(updatedCell)
-
+	const updatedCell = toggleCell(cell)
+	updateSiblingCell(table, updatedCell)
+	const res = checkWin(table)
+	res && res.gameOver && alert(`Winner: ${res.winner}`) && initGame(table.rows.length)
 }
 
 /**
  *
- * @param cell HTMLTableCellElement
+ * @param table HTMLTableElement
+ * @returns {null|{winner: (string), gameOver: boolean}}
  */
-function initCell(cell) {
-	cell.addEventListener('click', onClickHandler)
+function checkWin(table) {
+	if (!table) {
+		return null
+	}
+
+
+	const n = table.rows.length
+	const stats = {
+		white: 0,
+		black: 0
+	}
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			switch (table.rows.item(i).cells[j].classList.value) {
+				case 'black':
+					stats.black++
+					break
+				case 'white':
+					stats.white++
+			}
+		}
+	}
+	return {
+		gameOver: stats.white === n * n || stats.black === n * n,
+		winner: stats.white > stats.black ? 'white' : 'black'
+	}
 }
+
+function toggleByCell(table, {x, y}) {
+	if (table) {
+		const n = table.rows.length
+
+		return x >= 0 &&
+			y >= 0 &&
+			x <= n - 1 &&
+			y <= n - 1 &&
+			toggleCell(table.rows.item(x).cells[y])
+	}
+}
+
 
 /**
  *
+ * @param table HTMLTableElement
  * @param cell HTMLTableCellElement
  */
-function updateSiblingCell(cell) {
-	const [x, y] = cell.dataset.hook.replace('cell-', '').split('-')
-	console.log('cell position', x, y)
-	// todo find sibling
+function updateSiblingCell(table = document.querySelector('table'), cell) {
+
+	const [x, y] = cell.dataset.hook.replace('cell-', '').split('-').map(i=>parseInt(i))
+
+	const top = {x: x - 1, y}
+	toggleByCell(table, top)
+
+	const left = {x, y: y - 1}
+	toggleByCell(table, left)
+
+	const right = {x, y: y + 1}
+	toggleByCell(table, right)
+
+	const bottom = {x: x + 1, y}
+	toggleByCell(table, bottom)
 }
 
 
 if (typeof exports !== 'undefined') {
 	module.exports = {
-		renderField,
+		initGame,
+		renderTable,
 		updateCell,
-		initCell,
-		toggleCell
+		setColors,
+		setHandlers,
+		toggleCell,
+		onClickHandler,
+		checkWin
 	}
 }
