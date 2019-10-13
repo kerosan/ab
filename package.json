@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env PORT=3003 node ./bin/www",
     "test": "jest",
-    "ci": "server-test 3000"
+    "test:ci": "server-test 3003"
   },
   "repository": {
     "type": "git",
