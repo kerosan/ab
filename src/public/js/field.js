@@ -99,8 +99,6 @@ function checkWin(table) {
   if (!table) {
     return null
   }
-
-
   const n = table.rows.length
   const stats = {
     white: 0,
@@ -126,7 +124,6 @@ function checkWin(table) {
 function toggleByCell(table, {r, c}) {
   if (table) {
     const n = table.rows.length
-
     return r >= 0 &&
       c >= 0 &&
       r <= n - 1 &&
@@ -134,7 +131,6 @@ function toggleByCell(table, {r, c}) {
       toggleCell(table.rows.item(r).cells[c])
   }
 }
-
 
 /**
  *
