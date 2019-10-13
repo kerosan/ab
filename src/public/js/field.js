@@ -123,15 +123,15 @@ function checkWin(table) {
   }
 }
 
-function toggleByCell(table, {x, y}) {
+function toggleByCell(table, {r, c}) {
   if (table) {
     const n = table.rows.length
 
-    return x >= 0 &&
-      y >= 0 &&
-      x <= n - 1 &&
-      y <= n - 1 &&
-      toggleCell(table.rows.item(x).cells[y])
+    return r >= 0 &&
+      c >= 0 &&
+      r <= n - 1 &&
+      c <= n - 1 &&
+      toggleCell(table.rows.item(r).cells[c])
   }
 }
 
@@ -143,18 +143,18 @@ function toggleByCell(table, {x, y}) {
  */
 function updateSiblingCell(table = document.querySelector('table'), cell) {
 
-  const [x, y] = cell.dataset.hook.replace('cell-', '').split('-').map(i => parseInt(i))
+  const [r, c] = cell.dataset.hook.replace('cell-', '').split('-').map(i => parseInt(i))
 
-  const top = {x: x - 1, y}
+  const top = {r: r - 1, c}
   toggleByCell(table, top)
 
-  const left = {x, y: y - 1}
+  const left = {r, c: c - 1}
   toggleByCell(table, left)
 
-  const right = {x, y: y + 1}
+  const right = {r, c: c + 1}
   toggleByCell(table, right)
 
-  const bottom = {x: x + 1, y}
+  const bottom = {r: r + 1, c}
   toggleByCell(table, bottom)
 }
 
