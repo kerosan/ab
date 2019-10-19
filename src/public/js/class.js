@@ -60,8 +60,12 @@ class Game extends HTMLElement {
       modal.remove()
     }
     const input = document.querySelector('input[type=number]')
-    const size = input.value > 10 ? 10 : input.value
+    let size = 6
+    if (/\d+/.test(input.value)) {
+      size = input.value > 10 ? 10 : input.value
+    }
     input.value = size
+
     const oldTable = root.querySelector('table')
     const game = new Game(size)
     if (oldTable) {
