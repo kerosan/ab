@@ -64,13 +64,11 @@ class Game extends HTMLElement {
     input.value = size
     const oldTable = root.querySelector('table')
     const game = new Game(size)
-    console.log(game, oldTable, root, modal, input)
     if (oldTable) {
       root.replaceChild(game.render(), oldTable)
     } else {
       root.appendChild(game.render())
     }
-
   }
 
   start = () => {
@@ -137,6 +135,7 @@ class Game extends HTMLElement {
     const darkCells = this.board.every((row) => row.every(cell => !cell.isRotated))
     return lightCells || darkCells
   }
+
   showModal = () => {
     const timer = setTimeout(() => {
       clearTimeout(timer)
@@ -144,6 +143,7 @@ class Game extends HTMLElement {
       root.appendChild(this.getModal('you win'))
     }, 400)
   }
+
   getModal = (text) => {
     const modal = document.createElement('div')
     modal.classList.add('modal')
