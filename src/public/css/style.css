@@ -22,3 +22,48 @@ table tr td.black {
 table tr td.white {
     background-color: #eeeeee;
 }
+
+.cell {
+    background-color: #000066;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+}
+
+.cell.rotated {
+    background-color: aquamarine;
+    transform: rotateY(180deg);
+}
+
+.modal {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, .8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.window {
+    background-color: #7f7f7f;
+    border: 2px solid #333333;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.window span {
+    display: inline-block;
+    font-size: 20pt;
+}
+
+.window button {
+    margin-top: 30px;
+    font-size: 20pt;
+}
