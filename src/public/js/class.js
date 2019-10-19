@@ -54,23 +54,28 @@ class Game extends HTMLElement {
   dimension = document.querySelector('input[type=number]').value
 
   static init = () => {
+    const root = document.getElementById('root')
+    const modal = document.querySelector('.modal')
+    if (modal) {
+      modal.remove()
+    }
     const input = document.querySelector('input[type=number]')
     const size = input.value > 10 ? 10 : input.value
     input.value = size
-    const oldTable = document.querySelector('table')
+    const oldTable = root.querySelector('table')
     const game = new Game(size)
+    console.log(game, oldTable, root, modal, input)
     if (oldTable) {
       root.replaceChild(game.render(), oldTable)
     } else {
       root.appendChild(game.render())
-
     }
+
   }
 
-  constructor(n) {
-    super()
-    this.dimension = n
-    const matrix = Array.from({length: n})
+  start = () => {
+    this.board = []
+    const matrix = [...Array.from({length: this.dimension})]
 
     const rows = matrix.map((_, i) => {
       this.board.push([])
@@ -84,11 +89,23 @@ class Game extends HTMLElement {
     })
     this.element = new Board(rows).render()
     this.element.addEventListener('click', this.onClickCell)
+    if (this.isPlayerWin()) {
+      this.start()
+    }
+  }
+
+  constructor(n) {
+    super()
+    this.dimension = n
+    this.start()
+
   }
 
   onClickCell = e => {
     this.updateSiblingCell(e.target)
-    this.updateGameStatus()
+    if (this.isPlayerWin()) {
+      this.showModal()
+    }
   }
 
   updateSiblingCell = (cell) => {
@@ -115,17 +132,18 @@ class Game extends HTMLElement {
     this.board[r][c].rotate()
   }
 
-  updateGameStatus = () => {
+  isPlayerWin = () => {
     const lightCells = this.board.every((row) => row.every(cell => cell.isRotated))
     const darkCells = this.board.every((row) => row.every(cell => !cell.isRotated))
-    if (lightCells || darkCells) {
-      const timer = setTimeout(() => {
-        clearTimeout(timer)
-        this.element.appendChild(this.getModal('you win'))
-      }, 400)
-    }
+    return lightCells || darkCells
   }
-
+  showModal = () => {
+    const timer = setTimeout(() => {
+      clearTimeout(timer)
+      const root = document.getElementById('root')
+      root.appendChild(this.getModal('you win'))
+    }, 400)
+  }
   getModal = (text) => {
     const modal = document.createElement('div')
     modal.classList.add('modal')
