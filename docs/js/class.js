@@ -54,7 +54,8 @@ class Game extends HTMLElement {
   dimension = document.querySelector('input[type=number]').value
 
   static init = () => {
-    const size = document.querySelector('input[type=number]').value
+    const input = document.querySelector('input[type=number]')
+    const size = input.value > 10 ? 10 : input.value
     const oldTable = document.querySelector('table')
     const game = new Game(size)
     if (oldTable) {
