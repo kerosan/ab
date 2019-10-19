@@ -90,7 +90,7 @@ class Game extends HTMLElement {
     this.element = new Board(rows).render()
     this.element.addEventListener('click', this.onClickCell)
     if (this.isPlayerWin()) {
-      this.start()
+      this.start(n)
     }
   }
 
