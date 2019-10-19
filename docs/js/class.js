@@ -71,7 +71,9 @@ class Game extends HTMLElement {
     }
   }
 
-  start = () => {
+  start = (n) => {
+    this.dimension = n
+
     this.board = []
     const matrix = [...Array.from({length: this.dimension})]
 
@@ -94,9 +96,7 @@ class Game extends HTMLElement {
 
   constructor(n) {
     super()
-    this.dimension = n
-    this.start()
-
+    this.start(n)
   }
 
   onClickCell = e => {
