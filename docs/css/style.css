@@ -1,6 +1,10 @@
 body {
     padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 20pt "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+button, input {
+    font-size: 20pt;
 }
 
 #root {

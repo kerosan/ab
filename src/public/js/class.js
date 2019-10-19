@@ -1,7 +1,7 @@
 class HTMLElement {
   /**
    *
-   * @type {HTMLTableElement|HTMLTableCellElement|HTMLTableRowElement}
+   * @type {HTMLDivElement|HTMLTableElement|HTMLTableCellElement|HTMLTableRowElement}
    */
   element = null
 
@@ -140,11 +140,14 @@ class Game extends HTMLElement {
     const timer = setTimeout(() => {
       clearTimeout(timer)
       const root = document.getElementById('root')
-      root.appendChild(this.getModal('you win'))
+      root.appendChild(new Modal('you win').render())
     }, 400)
   }
+}
 
-  getModal = (text) => {
+class Modal extends HTMLElement {
+  constructor(text) {
+    super()
     const modal = document.createElement('div')
     modal.classList.add('modal')
     const window = document.createElement('div')
@@ -157,6 +160,6 @@ class Game extends HTMLElement {
     window.appendChild(title)
     window.appendChild(btn)
     modal.appendChild(window)
-    return modal
+    this.element = modal
   }
 }
