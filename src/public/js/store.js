@@ -57,12 +57,11 @@ class Store {
   checkCrossCell = (point, color) => {
 
     const cross = point.getCross()
-    const current = this.pickByPoint(point)
 
     return [this.pickByPoint(cross.topLeft),
       this.pickByPoint(cross.topRight),
       this.pickByPoint(cross.bottomLeft),
-      this.pickByPoint(cross.bottomRight)].some(i => i === current || color)
+      this.pickByPoint(cross.bottomRight)].some(i => i === color)
   }
 
   /**
@@ -88,8 +87,10 @@ class Store {
           this.data[r][c] = color
         }
         const point = new Point({r, c})
+        const current = this.pickByPoint(point)
 
-        this.data[r][c] = this.checkCrossCell(point, color) !== color
+
+        this.data[r][c] = this.checkCrossCell(point, color) === current
       }
     }
   }
