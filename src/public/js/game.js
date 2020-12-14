@@ -1,4 +1,4 @@
-class Game extends HTMLElement {
+class Game extends HTML_Element {
   /**
    *
    * @type {Store}
@@ -7,7 +7,7 @@ class Game extends HTMLElement {
 
   dimension = document.querySelector('input[type=number]').value
 
-  static init = () => {
+  static init() {
     const root = document.getElementById('root')
     const modal = document.querySelector('.modal')
     if (modal) {
