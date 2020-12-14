@@ -1,4 +1,4 @@
-class HTMLElement {
+class HTML_Element {
   /**
    *
    * @type {HTMLDivElement|HTMLTableElement|HTMLTableCellElement|HTMLTableRowElement}

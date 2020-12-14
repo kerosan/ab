@@ -1,4 +1,4 @@
-class Cell extends HTMLElement {
+class Cell extends HTML_Element {
   isRotated = false
 
   rotate = () => {

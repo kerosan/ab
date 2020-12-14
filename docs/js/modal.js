@@ -1,4 +1,4 @@
-class Modal extends HTMLElement {
+class Modal extends HTML_Element {
   constructor(text) {
     super()
     const modal = document.createElement('div')
