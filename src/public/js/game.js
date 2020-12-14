@@ -1,3 +1,5 @@
+const INITIAL_BOARD_SIZE = 3;
+
 class Game extends HTML_Element {
   /**
    *
@@ -6,7 +8,6 @@ class Game extends HTML_Element {
   store
 
   dimension = document.querySelector('input[type=number]').value
-  static INITIAL_BOARD_SIZE = 3;
 
   static init() {
     const root = document.getElementById('root')
@@ -16,7 +17,7 @@ class Game extends HTML_Element {
     }
 
     const input = document.querySelector('input[type=number]')
-    let size = this.INITIAL_BOARD_SIZE
+    let size = INITIAL_BOARD_SIZE
     if (/\d+/.test(input.value)) {
       size = input.value > 10 ? 10 : input.value
     }
