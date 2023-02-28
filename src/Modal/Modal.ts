@@ -1,28 +1,19 @@
 export class Modal {
-    static show(params: {text: string, onReset: ()=> void, }) {
-        // todo refactor
-        const root = document.getElementById('root');
+    static show(params: { text: string, onReset: () => void, }) {
+        const modal = document.getElementById('modal');
+        modal?.classList.remove('hidden');
 
-        const modal = document.createElement('div');
+        const btn = modal?.querySelector('.window button');
+        const onReset = () => {
+            params.onReset();
+            modal?.classList.add('hidden');
+            btn?.removeEventListener('click', onReset);
+        };
+        btn?.addEventListener('click', onReset);
 
-        modal.classList.add('modal')
-        const window = document.createElement('div')
-        window.classList.add('window')
-        const btn = document.createElement('button')
-        btn.innerText = 'Restart'
-        btn.addEventListener('click', params.onReset)
-        const title = document.createElement('span')
-        title.innerText = params.text
-        window.appendChild(title)
-        window.appendChild(btn)
-        modal.appendChild(window)
-
-        root?.appendChild(modal);
-        return () => {
-            btn.removeEventListener('click', params.onReset)
-
-            modal.remove();
+        const title = modal?.querySelector('span');
+        if (title) {
+            title.innerText = params.text;
         }
-
     }
 }
