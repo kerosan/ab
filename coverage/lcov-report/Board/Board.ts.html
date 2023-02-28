@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/25</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/17</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>15/15</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -110,9 +110,11 @@
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,10 +132,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,58 +158,63 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Cell} from '../Cell';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Point} from '../Point';
 import {State} from "../types";
-import {Player} from "../Player";
-&nbsp;
 &nbsp;
 export class Board {
 &nbsp;
-    state: State
-    table?: HTMLElement
+    state: State;
+    table?: HTMLElement;
 &nbsp;
     constructor(private size: number, private renderer: (state: State) =&gt; HTMLElement) {
         this.state = Array.from&lt;boolean[]&gt;({length: this.size})
             .fill(Array.from&lt;boolean&gt;({length: this.size}));
     }
 &nbsp;
-    public draw(predefined?: boolean[][]) {
-        if (predefined &amp;&amp; (predefined.length !== this.size || predefined.some(row =&gt; row.length !== this.size))) {
+    public drawByTemplate(template: State): Board {
+        if (template &amp;&amp; (template.length !== this.size || template.some(row =&gt; row.length !== this.size))) {
             throw new Error(`Out of boundaries (limit: ${this.size})`);
         }
 &nbsp;
-        this.state = predefined ?? this.state.map(row =&gt; row.map(() =&gt; Math.random() &gt; .5))
+        this.state = template;
         this.table = this.renderer(this.state);
-        console.log('board.start', this);
         return this;
     }
 &nbsp;
-    flipCell(cell: Cell) {
-        this.state[cell.x][cell.y] = !this.state[cell.x][cell.y];
-        const siblings = cell.getSiblings();
-        [siblings.bottom, siblings.left, siblings.right, siblings.top].forEach((c) =&gt; this.flipSiblings(c));
+    public drawRandom(): Board {
+        this.state = this.state.map(row =&gt; row.map(() =&gt; Math.random() &gt; .5));
+        this.table = this.renderer(this.state);
+        return this;
+    }
+&nbsp;
+    flipCell(point: Point) {
+        this.state[point.x][point.y] = !this.state[point.x][point.y];
+        const siblings = point.getSiblings();
+        Object.entries(siblings).forEach(([_, c]) =&gt; this.flipSiblings(c));
         return this.state;
     }
 &nbsp;
-    flipSiblings(cell: Cell) {
-        if (cell.y &lt; 0 || cell.y &gt; this.size - 1 || cell.x &lt; 0 || cell.x &gt; this.size - 1) {
-            return
+    flipSiblings(point: Point) {
+        if (point.y &lt; 0 || point.y &gt; this.size - 1 || point.x &lt; 0 || point.x &gt; this.size - 1) {
+            return;
         }
-        this.state[cell.x][cell.y] = !this.state[cell.x][cell.y];
+        this.state[point.x][point.y] = !this.state[point.x][point.y];
     }
 &nbsp;
-    check(cell?: Cell) {
-        if (cell !== undefined) {
-            return this.state[cell.x][cell.y];
-        }
+    checkCell(point: Point): boolean {
+        return this.state[point.x][point.y];
+    }
+&nbsp;
+    checkBoard(): boolean {
         return this.state.every(row =&gt; row.every(col =&gt; col))
-            || this.state.every(row =&gt; row.every(col =&gt; !col))
+            || this.state.every(row =&gt; row.every(col =&gt; !col));
     }
 }</pre></td></tr></table></pre>
 
@@ -211,7 +223,7 @@ export class Board {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-27T23:23:04.470Z
+                at 2023-02-28T11:33:50.203Z
             </div>
         <script src="../prettify.js"></script>
         <script>

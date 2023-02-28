@@ -13,22 +13,23 @@ export class Player {
                 Renderer.update(table, board.flipCell(new Point({
                     x: Number(td.dataset?.x) ?? 0,
                     y: Number(td.dataset?.y) ?? 0
-                })))
+                })));
             }
 
-            if (board.check()) {
+            if (board.checkBoard()) {
                 Modal.show({
-                    text: 'win', onReset: () => {
-                        table?.removeEventListener('click', onClick)
-                        Player.listen(board.draw());
-                        table?.addEventListener('click', onClick)
+                    text: 'win',
+                    onReset: () => {
+                        table?.removeEventListener('click', onClick);
+                        Player.listen(board.drawRandom());
+                        table?.addEventListener('click', onClick);
                     }
                 });
 
             }
-        }
+        };
 
-        table?.removeEventListener('click', onClick)
-        table?.addEventListener('click', onClick)
+        table?.removeEventListener('click', onClick);
+        table?.addEventListener('click', onClick);
     }
 }

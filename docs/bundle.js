@@ -67,13 +67,17 @@ System.register("Board/Board", [], function (exports_4, context_4) {
                     this.state = Array.from({ length: this.size })
                         .fill(Array.from({ length: this.size }));
                 }
-                draw(predefined) {
-                    if (predefined && (predefined.length !== this.size || predefined.some(row => row.length !== this.size))) {
+                drawByTemplate(template) {
+                    if (template && (template.length !== this.size || template.some(row => row.length !== this.size))) {
                         throw new Error(`Out of boundaries (limit: ${this.size})`);
                     }
-                    this.state = predefined !== null && predefined !== void 0 ? predefined : this.state.map(row => row.map(() => Math.random() > .5));
+                    this.state = template;
                     this.table = this.renderer(this.state);
-                    console.log('board.start', this);
+                    return this;
+                }
+                drawRandom() {
+                    this.state = this.state.map(row => row.map(() => Math.random() > .5));
+                    this.table = this.renderer(this.state);
                     return this;
                 }
                 flipCell(point) {
@@ -88,10 +92,10 @@ System.register("Board/Board", [], function (exports_4, context_4) {
                     }
                     this.state[point.x][point.y] = !this.state[point.x][point.y];
                 }
-                check(point) {
-                    if (point !== undefined) {
-                        return this.state[point.x][point.y];
-                    }
+                checkCell(point) {
+                    return this.state[point.x][point.y];
+                }
+                checkBoard() {
                     return this.state.every(row => row.every(col => col))
                         || this.state.every(row => row.every(col => !col));
                 }
@@ -150,15 +154,15 @@ System.register("Renderer/Renderer", [], function (exports_6, context_6) {
                         rows.forEach(tr => {
                             table.appendChild(tr);
                         });
-                        root.replaceChildren(table);
+                        root === null || root === void 0 ? void 0 : root.replaceChildren(table);
                         return table;
                     };
                 }
                 static update(table, state) {
                     state.forEach((row, x) => row.forEach((col, y) => {
-                        const td = table.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-                        col ? td === null || td === void 0 ? void 0 : td.classList.replace('white', 'black')
-                            : td === null || td === void 0 ? void 0 : td.classList.replace('black', 'white');
+                        const cell = table.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+                        col ? cell === null || cell === void 0 ? void 0 : cell.classList.replace('white', 'black')
+                            : cell === null || cell === void 0 ? void 0 : cell.classList.replace('black', 'white');
                     }));
                 }
             };
@@ -195,25 +199,19 @@ System.register("Modal/Modal", [], function (exports_8, context_8) {
         execute: function () {
             Modal = class Modal {
                 static show(params) {
-                    // todo refactor
-                    const root = document.getElementById('root');
-                    const modal = document.createElement('div');
-                    modal.classList.add('modal');
-                    const window = document.createElement('div');
-                    window.classList.add('window');
-                    const btn = document.createElement('button');
-                    btn.innerText = 'Restart';
-                    btn.addEventListener('click', params.onReset);
-                    const title = document.createElement('span');
-                    title.innerText = params.text;
-                    window.appendChild(title);
-                    window.appendChild(btn);
-                    modal.appendChild(window);
-                    root === null || root === void 0 ? void 0 : root.appendChild(modal);
-                    return () => {
-                        btn.removeEventListener('click', params.onReset);
-                        modal.remove();
+                    const modal = document.getElementById('modal');
+                    modal === null || modal === void 0 ? void 0 : modal.classList.remove('hidden');
+                    const btn = modal === null || modal === void 0 ? void 0 : modal.querySelector('.window button');
+                    const onReset = () => {
+                        params.onReset();
+                        modal === null || modal === void 0 ? void 0 : modal.classList.add('hidden');
+                        btn === null || btn === void 0 ? void 0 : btn.removeEventListener('click', onReset);
                     };
+                    btn === null || btn === void 0 ? void 0 : btn.addEventListener('click', onReset);
+                    const title = modal === null || modal === void 0 ? void 0 : modal.querySelector('span');
+                    if (title) {
+                        title.innerText = params.text;
+                    }
                 }
             };
             exports_8("Modal", Modal);
@@ -269,11 +267,12 @@ System.register("Player/Player", ["Renderer/index", "Point/index", "Modal/index"
                                 y: (_d = Number((_c = td.dataset) === null || _c === void 0 ? void 0 : _c.y)) !== null && _d !== void 0 ? _d : 0
                             })));
                         }
-                        if (board.check()) {
+                        if (board.checkBoard()) {
                             Modal_2.Modal.show({
-                                text: 'win', onReset: () => {
+                                text: 'win',
+                                onReset: () => {
                                     table === null || table === void 0 ? void 0 : table.removeEventListener('click', onClick);
-                                    Player.listen(board.draw());
+                                    Player.listen(board.drawRandom());
                                     table === null || table === void 0 ? void 0 : table.addEventListener('click', onClick);
                                 }
                             });
@@ -325,11 +324,8 @@ System.register("index", ["Board/index", "Renderer/index", "Player/index"], func
         ],
         execute: function () {
             exports_12("bootstrap", bootstrap = (size) => {
-                const root = document.getElementById('root');
-                if (root !== null) {
-                    const board = new Board_2.Board(size, Renderer_3.Renderer.init(root));
-                    Player_2.Player.listen(board.draw());
-                }
+                const board = new Board_2.Board(size, Renderer_3.Renderer.init(document.getElementById('root')));
+                Player_2.Player.listen(board.drawRandom());
             });
             button = document.getElementById('reset');
             input = document.querySelector('input');

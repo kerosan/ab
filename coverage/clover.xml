@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677540184484" clover="3.2.0">
-  <project timestamp="1677540184484" name="All files">
-    <metrics statements="23" coveredstatements="23" conditionals="17" coveredconditionals="17" methods="16" coveredmethods="16" elements="56" coveredelements="56" complexity="0" loc="23" ncloc="23" packages="2" files="3" classes="3"/>
+<coverage generated="1677584030217" clover="3.2.0">
+  <project timestamp="1677584030217" name="All files">
+    <metrics statements="24" coveredstatements="24" conditionals="13" coveredconditionals="13" methods="18" coveredmethods="18" elements="55" coveredelements="55" complexity="0" loc="24" ncloc="24" packages="2" files="3" classes="3"/>
     <package name="Board">
-      <metrics statements="18" coveredstatements="18" conditionals="17" coveredconditionals="17" methods="13" coveredmethods="13"/>
+      <metrics statements="19" coveredstatements="19" conditionals="13" coveredconditionals="13" methods="15" coveredmethods="15"/>
       <file name="Board.ts" path="/Users/nikolajartemov/projects/ab/src/Board/Board.ts">
-        <metrics statements="18" coveredstatements="18" conditionals="17" coveredconditionals="17" methods="13" coveredmethods="13"/>
-        <line num="12" count="5" type="stmt"/>
-        <line num="17" count="10" type="cond" truecount="5" falsecount="0"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="21" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="24" count="4" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="30" count="4" type="stmt"/>
+        <metrics statements="19" coveredstatements="19" conditionals="13" coveredconditionals="13" methods="15" coveredmethods="15"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="15" count="10" type="cond" truecount="5" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
-        <line num="35" count="4" type="cond" truecount="6" falsecount="0"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="42" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="43" count="4" type="stmt"/>
-        <line num="45" count="12" type="cond" truecount="2" falsecount="0"/>
-        <line num="46" count="10" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="4" type="cond" truecount="6" falsecount="0"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="49" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="10" type="stmt"/>
       </file>
     </package>
-    <package name="Cell">
+    <package name="Point">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="Cell.ts" path="/Users/nikolajartemov/projects/ab/src/Cell/Cell.ts">
+      <file name="Point.ts" path="/Users/nikolajartemov/projects/ab/src/Point/Point.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="5" count="1" type="stmt"/>
         <line num="8" count="7" type="stmt"/>
@@ -36,7 +37,7 @@
         <line num="12" count="7" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
       </file>
-      <file name="index.ts" path="/Users/nikolajartemov/projects/ab/src/Cell/index.ts">
+      <file name="index.ts" path="/Users/nikolajartemov/projects/ab/src/Point/index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
