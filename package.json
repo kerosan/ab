@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env PORT=3003 serve ./docs",
-    "build": "npx rimraf docs && tsc -p tsconfig.prod.json && npm run copy-files",
+    "build": "npx rimraf docs/bundle.js && tsc -p tsconfig.prod.json",
     "build:watch": "tsc -p tsconfig.prod.json --watch",
-    "copy-files": "npx cpx './public/**/*.{html,css}' docs",
     "start:ts": "ts-node ./src/index.ts",
     "test": "jest"
   },
