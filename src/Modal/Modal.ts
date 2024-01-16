@@ -10,6 +10,7 @@ export class Modal {
             btn?.removeEventListener('click', onReset);
         };
         btn?.addEventListener('click', onReset);
+        modal?.addEventListener('click', () => modal?.classList.add('hidden'));
 
         const title = modal?.querySelector('span');
         if (title) {

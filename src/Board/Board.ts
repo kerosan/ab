@@ -7,6 +7,7 @@ export class Board {
     table?: HTMLElement;
 
     constructor(private size: number, private renderer: (state: State) => HTMLElement) {
+        
         this.state = Array.from<boolean[]>({length: this.size})
             .fill(Array.from<boolean>({length: this.size}));
     }

@@ -18,4 +18,11 @@ export class Point {
         };
 
     };
+
+    isSame = (point: Point) =>{
+        console.log(this, point);
+        
+        return point.x === this.x && point.y === this.y;
+
+    }
 }

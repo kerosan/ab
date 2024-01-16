@@ -15,6 +15,10 @@ System.register("Point/Point", [], function (exports_1, context_1) {
                             bottom: new Point({ x: this.x, y: this.y + 1 })
                         };
                     };
+                    this.isSame = (point) => {
+                        console.log(this, point);
+                        return point.x === this.x && point.y === this.y;
+                    };
                     this.x = x;
                     this.y = y;
                 }
@@ -124,15 +128,22 @@ System.register("Board/index", ["Board/Board"], function (exports_5, context_5) 
         }
     };
 });
-System.register("Renderer/Renderer", [], function (exports_6, context_6) {
+System.register("Renderer/Renderer", ["Board/index", "Point/index"], function (exports_6, context_6) {
     "use strict";
-    var Renderer;
+    var Board_2, Point_2, Renderer;
     var __moduleName = context_6 && context_6.id;
     return {
-        setters: [],
+        setters: [
+            function (Board_2_1) {
+                Board_2 = Board_2_1;
+            },
+            function (Point_2_1) {
+                Point_2 = Point_2_1;
+            }
+        ],
         execute: function () {
             Renderer = class Renderer {
-                static init(root) {
+                static init(root, highlight) {
                     return (state) => {
                         const table = document.createElement('table');
                         const rows = state.map((row, x) => {
@@ -143,6 +154,10 @@ System.register("Renderer/Renderer", [], function (exports_6, context_6) {
                                 td.classList.add(cell ? 'black' : 'white');
                                 td.dataset['x'] = x.toString();
                                 td.dataset['y'] = y.toString();
+                                const point = new Point_2.Point({ x, y });
+                                if (highlight && point.isSame(highlight)) {
+                                    td.classList.add('highlight');
+                                }
                                 return td;
                             });
                             td.forEach(c => tr.appendChild(c));
@@ -151,10 +166,9 @@ System.register("Renderer/Renderer", [], function (exports_6, context_6) {
                         rows.forEach(tr => {
                             table.appendChild(tr);
                         });
-                        rows.forEach(tr => {
-                            table.appendChild(tr);
-                        });
+                        table.classList.add('board');
                         root === null || root === void 0 ? void 0 : root.replaceChildren(table);
+                        Renderer.history(root, state);
                         return table;
                     };
                 }
@@ -164,6 +178,30 @@ System.register("Renderer/Renderer", [], function (exports_6, context_6) {
                         col ? cell === null || cell === void 0 ? void 0 : cell.classList.replace('white', 'black')
                             : cell === null || cell === void 0 ? void 0 : cell.classList.replace('black', 'white');
                     }));
+                }
+                static history(root, state) {
+                    const navigation = document.createElement('navigation');
+                    navigation.classList.add('history');
+                    const onAddHistory = (e) => {
+                        var _a, _b, _c, _d;
+                        const x = Number((_b = (_a = e.target) === null || _a === void 0 ? void 0 : _a.dataset) === null || _b === void 0 ? void 0 : _b.x);
+                        const y = Number((_d = (_c = e.target) === null || _c === void 0 ? void 0 : _c.dataset) === null || _d === void 0 ? void 0 : _d.y);
+                        const clickCell = new Point_2.Point({ x, y });
+                        console.log(clickCell, state);
+                        const miniTable = document.createElement('table');
+                        const miniBoard = new Board_2.Board(state.length, Renderer.init(miniTable, clickCell));
+                        miniBoard.drawByTemplate(state);
+                        if (miniBoard.table) {
+                            navigation.prepend(miniBoard.table);
+                        }
+                    };
+                    root === null || root === void 0 ? void 0 : root.append(document.createElement('br'));
+                    root === null || root === void 0 ? void 0 : root.append(document.createTextNode('History'));
+                    root === null || root === void 0 ? void 0 : root.append(document.createElement('hr'));
+                    root === null || root === void 0 ? void 0 : root.append(navigation);
+                    root === null || root === void 0 ? void 0 : root.append(document.createElement('hr'));
+                    root === null || root === void 0 ? void 0 : root.removeEventListener('click', onAddHistory);
+                    root === null || root === void 0 ? void 0 : root.addEventListener('click', onAddHistory);
                 }
             };
             exports_6("Renderer", Renderer);
@@ -208,6 +246,7 @@ System.register("Modal/Modal", [], function (exports_8, context_8) {
                         btn === null || btn === void 0 ? void 0 : btn.removeEventListener('click', onReset);
                     };
                     btn === null || btn === void 0 ? void 0 : btn.addEventListener('click', onReset);
+                    modal === null || modal === void 0 ? void 0 : modal.addEventListener('click', () => modal === null || modal === void 0 ? void 0 : modal.classList.add('hidden'));
                     const title = modal === null || modal === void 0 ? void 0 : modal.querySelector('span');
                     if (title) {
                         title.innerText = params.text;
@@ -240,15 +279,15 @@ System.register("Modal/index", ["Modal/Modal"], function (exports_9, context_9) 
 });
 System.register("Player/Player", ["Renderer/index", "Point/index", "Modal/index"], function (exports_10, context_10) {
     "use strict";
-    var Renderer_2, Point_2, Modal_2, Player;
+    var Renderer_2, Point_3, Modal_2, Player;
     var __moduleName = context_10 && context_10.id;
     return {
         setters: [
             function (Renderer_2_1) {
                 Renderer_2 = Renderer_2_1;
             },
-            function (Point_2_1) {
-                Point_2 = Point_2_1;
+            function (Point_3_1) {
+                Point_3 = Point_3_1;
             },
             function (Modal_2_1) {
                 Modal_2 = Modal_2_1;
@@ -262,10 +301,12 @@ System.register("Player/Player", ["Renderer/index", "Point/index", "Modal/index"
                         var _a, _b, _c, _d;
                         const td = e.target;
                         if (table) {
-                            Renderer_2.Renderer.update(table, board.flipCell(new Point_2.Point({
+                            const point = new Point_3.Point({
                                 x: (_b = Number((_a = td.dataset) === null || _a === void 0 ? void 0 : _a.x)) !== null && _b !== void 0 ? _b : 0,
                                 y: (_d = Number((_c = td.dataset) === null || _c === void 0 ? void 0 : _c.y)) !== null && _d !== void 0 ? _d : 0
-                            })));
+                            });
+                            const state = board.flipCell(point);
+                            Renderer_2.Renderer.update(table, state);
                         }
                         if (board.checkBoard()) {
                             Modal_2.Modal.show({
@@ -308,12 +349,12 @@ System.register("Player/index", ["Player/Player"], function (exports_11, context
 });
 System.register("index", ["Board/index", "Renderer/index", "Player/index"], function (exports_12, context_12) {
     "use strict";
-    var Board_2, Renderer_3, Player_2, bootstrap, button, input;
+    var Board_3, Renderer_3, Player_2, bootstrap, button, input;
     var __moduleName = context_12 && context_12.id;
     return {
         setters: [
-            function (Board_2_1) {
-                Board_2 = Board_2_1;
+            function (Board_3_1) {
+                Board_3 = Board_3_1;
             },
             function (Renderer_3_1) {
                 Renderer_3 = Renderer_3_1;
@@ -324,7 +365,7 @@ System.register("index", ["Board/index", "Renderer/index", "Player/index"], func
         ],
         execute: function () {
             exports_12("bootstrap", bootstrap = (size) => {
-                const board = new Board_2.Board(size, Renderer_3.Renderer.init(document.getElementById('root')));
+                const board = new Board_3.Board(size, Renderer_3.Renderer.init(document.getElementById('root')));
                 Player_2.Player.listen(board.drawRandom());
             });
             button = document.getElementById('reset');

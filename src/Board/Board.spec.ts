@@ -39,7 +39,7 @@ describe('Board', function () {
         expect(board.checkBoard()).toBeTruthy();
     });
     it('should fail check', () => {
-        const board = new Board(3, renderer);
+        const board = new Board( 3, renderer);
         board.drawByTemplate([[true, false, false], [false, false, false], [false, false, false]]);
 
         expect(board.checkBoard()).toBeFalsy();

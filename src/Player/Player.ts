@@ -10,10 +10,12 @@ export class Player {
             const td = e.target as HTMLTableCellElement;
 
             if (table) {
-                Renderer.update(table, board.flipCell(new Point({
+                const point = new Point({
                     x: Number(td.dataset?.x) ?? 0,
                     y: Number(td.dataset?.y) ?? 0
-                })));
+                })
+                const state = board.flipCell(point)
+                Renderer.update(table, state);
             }
 
             if (board.checkBoard()) {
