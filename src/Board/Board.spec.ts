@@ -1,6 +1,6 @@
-import {Board} from './Board';
-import {Point} from '../Point';
-import {State} from '../types';
+import { Board } from './Board';
+import { Point } from '../Point';
+import { State } from '../types';
 
 describe('Board', function () {
 
@@ -11,10 +11,10 @@ describe('Board', function () {
         board.drawRandom();
         const zeroCell = Point.getZero();
         const prev = board.checkCell(zeroCell);
-        const prevSibling = board.checkCell(new Point({x: 1, y: 0}));
+        const prevSibling = board.checkCell(new Point({ x: 1, y: 0 }));
         board.flipCell(zeroCell);
         const next = board.checkCell(zeroCell);
-        const nextSibling = board.checkCell(new Point({x: 1, y: 0}));
+        const nextSibling = board.checkCell(new Point({ x: 1, y: 0 }));
 
         expect(prev).toEqual(!next);
         expect(prevSibling).toEqual(!nextSibling);
@@ -24,7 +24,7 @@ describe('Board', function () {
 
         expect(() => {
             board.drawByTemplate([[true, false, false, false], [false, false, false, true], [false, false, false, true]]);
-        }).toThrowError();
+        }).toThrow();
     });
     it('should check all true', function () {
         const board = new Board(3, renderer);
@@ -39,7 +39,7 @@ describe('Board', function () {
         expect(board.checkBoard()).toBeTruthy();
     });
     it('should fail check', () => {
-        const board = new Board( 3, renderer);
+        const board = new Board(3, renderer);
         board.drawByTemplate([[true, false, false], [false, false, false], [false, false, false]]);
 
         expect(board.checkBoard()).toBeFalsy();
