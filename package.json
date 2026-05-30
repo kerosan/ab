@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "bun": ">1.3.0"
+  },
   "scripts": {
-    "start": "vite preview --host --port 3003 --outDir ./docs",
+    "start": "vite preview --host --outDir ./docs",
     "build": "vite build",
     "build:watch": "vite build --watch",
     "dev": "vite",
     "start:ts": "ts-node ./src/index.ts",
     "test": "vitest --run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage --run"
+    "test:coverage": "vitest --coverage --run",
+    "prettier:fix": "prettier --write ./src"
   },
   "repository": {
     "type": "git",
@@ -27,6 +31,7 @@
     "@vitest/coverage-v8": "4.1.7",
     "@vitest/ui": "4.1.7",
     "jsdom": "29.1.1",
+    "prettier": "^3.8.3",
     "typescript": "5.8.3",
     "vite": "8.0.14",
     "vitest": "4.1.7"
