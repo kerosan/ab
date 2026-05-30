@@ -9,6 +9,14 @@ export class Player {
         const root = document.getElementById("root");
         if (!root) return;
 
+        Renderer.clearHistory(root);
+
+        // Record the initial state of the board
+        const nav = root.querySelector(".history");
+        if (nav instanceof HTMLElement) {
+            Player.recordMove(nav, board.state, undefined, board);
+        }
+
         // The container might not exist yet if this is called before the first render.
         // We use delegation on the root, but filter for clicks inside the board container.
         const onClick = (e: MouseEvent) => {
@@ -50,7 +58,12 @@ export class Player {
         root.onclick = onClick;
     }
 
-    private static recordMove(nav: HTMLElement, state: State, point: Point, board: Board) {
+    private static recordMove(
+        nav: HTMLElement,
+        state: State,
+        point: Point | undefined,
+        board: Board,
+    ) {
         const container = document.createElement("div");
         // Shallow copy rows to ensure the snapshot remains immutable for history
         const snapshot = state.map(row => [...row]);

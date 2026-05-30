@@ -75,4 +75,11 @@ export class Renderer {
         root?.append(navigation);
         root?.append(document.createElement("hr"));
     }
+
+    static clearHistory(root: HTMLElement | null) {
+        const nav = root?.querySelector(".history");
+        if (nav) {
+            nav.replaceChildren();
+        }
+    }
 }
