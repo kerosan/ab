@@ -32,7 +32,7 @@ describe('Lights Out Integration - Chasing Strategy', () => {
         Player.listen(board);
 
         // Verify that there are indeed 5 black cells in the DOM
-        const blackCellsInitial = root.querySelectorAll('.cell.black');
+        const blackCellsInitial = root.querySelectorAll('.board-container .cell.black');
         expect(blackCellsInitial.length).toBe(5);
 
         // 4. Apply the "Chasing the Lights" strategy
@@ -54,7 +54,7 @@ describe('Lights Out Integration - Chasing Strategy', () => {
         // In this scenario, the strategy should lead to complete victory (all cells are white)
         expect(board.checkBoard()).toBe(true);
 
-        const blackCellsFinal = root.querySelectorAll('.cell.black');
+        const blackCellsFinal = root.querySelectorAll('.board-container .cell.black');
         expect(blackCellsFinal.length).toBe(0);
     });
 });
