@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -25,4 +25,4 @@ jobs:
         run: bun install
 
       - name: Run tests
-        run: bun run test
+        run: bun run test:coverage
