@@ -14,7 +14,6 @@
     "start:ts": "ts-node ./src/index.ts",
     "test": "vitest --run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage --run --reporter=default --reporter=json-summary",
     "test:coverage": "vitest --coverage --run --reporter=default --coverage.reporter=text --coverage.reporter=json-summary",
     "prettier:fix": "prettier --write ./src"
   },
